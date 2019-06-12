@@ -1,0 +1,67 @@
+#include "pch.h"
+#include <stdio.h>
+#include <math.h>
+
+
+double tang(int m, int **tab) {
+	return tan(double(tab[1][m]));
+}
+
+double roznica(int m, int **tab) {
+	return double(tab[1][m]) - 7.92;
+}
+
+double skrt(int m, int **tab) {
+	return sqrt(pow(double(tab[1][m]),4));
+}
+
+double defaul(int m, int **tab) {
+	return tab[1][m];
+}
+
+int main() {
+	int k;
+	int val;
+	printf("Podaj liczbe kolumn: \n");
+	scanf_s("%d", &k);
+	int **tab = new int*[2];
+	for (int i = 0;i < 2;i++) {
+		tab[i] = new int[k];
+	}
+	double *S = new double[k];
+
+	printf("Podaj elementy (wierszami) \n");
+	for (int i = 0;i < 2;i++) {
+		for (int j = 0;j < k;j++) {
+			scanf_s("%d", &tab[i][j]);
+		}
+	}
+	for (int i = 0;i < 2;i++) {
+		for (int j = 0;j < k;j++) {
+			printf("%d ", tab[i][j]);
+		}
+		printf("\n");
+	}
+	
+	for (int i = 0;i < k;i++) {
+		val = tab[0][i];
+		switch (val) {
+			case 0:
+				S[i] = tang(i, tab);
+				break;
+			case 1:
+				S[i] = roznica(i, tab);
+				break;
+			case 2:
+				S[i] = skrt(i, tab);
+				break;
+			default:
+				S[i] = defaul(i, tab);
+				break;
+		}
+	}
+	for (int i = 0;i < k;i++) {
+		printf("%lf ", S[i]);
+	}
+	return 0;
+}

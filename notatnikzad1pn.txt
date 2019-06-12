@@ -1,0 +1,76 @@
+#include "pch.h"
+#include <stdio.h>
+struct Computer {
+	char producent[16];
+	double cena;
+};
+
+void Nowy(int &i, Computer *tab) {
+	printf("Dodaj komputer: \n");
+	scanf_s("%s", &tab[i].producent, 15);
+	scanf_s("%lf", &tab[i].cena);
+	i++;
+}
+void Informacje(int &i, Computer *tab) {
+	for (int j = 0;j < i;j++) {
+		printf("%s, %lf\n", tab[j].producent, tab[j].cena);
+	}
+}
+
+void InformacjeCena(int &i, Computer *tab) {
+	double cena;
+	scanf_s("%lf", &cena);
+	for (int j = 0;j < i;j++) {
+		if (tab[j].cena < cena){
+			printf("%s, %lf\n", tab[j].producent, tab[j].cena);
+		}
+	}
+}
+
+void Odczytanie(int &i, Computer *tab) {
+	i = 0;
+	FILE* plik;
+	int size;
+	fopen_s(&plik, "Kompy.txt", "rt");
+	fscanf_s(plik, "%d", &size);
+	for (int j = 0;j < size;j++) {
+		fscanf_s(plik, "%s", &tab[j].producent,15);
+		fscanf_s(plik, "%lf", &tab[j].cena);
+		i++;
+
+	}
+	fclose(plik);
+}
+
+void Zapis(int &i, Computer *tab) {
+	FILE *plik;
+	fopen_s(&plik, "Kompy.txt", "wt+");
+	fprintf(plik, "%d\n", i);
+	for (int j = 0;j < i;j++) {
+		fprintf(plik, "%s ", tab[j].producent);
+		fprintf(plik, "%lf\n", tab[j].cena);
+
+	}
+	fclose(plik);
+
+}
+
+int main() {
+	int i = 0;
+	bool loop = 1;
+	int opcja;
+	void(*wsk[5])(int&, Computer*) = { Nowy,Informacje,InformacjeCena,Odczytanie,Zapis };
+	Computer *tab = new Computer[50];
+	while (loop) {
+		printf("Podaj opcje \n");
+		printf("1 - Nowy, 2 - Informacje, 3 - InformacjeCena, 4 - Odczyt, 5 - Zapis, 0 - koniec\n");
+		scanf_s("%d", &opcja);
+		if (opcja == 0) {
+			loop = 0;
+		}
+		else
+		wsk[opcja - 1](i, tab);
+	}
+	return 0;
+}
+

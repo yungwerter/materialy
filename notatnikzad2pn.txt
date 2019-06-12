@@ -1,0 +1,51 @@
+#include "pch.h"
+#include <stdio.h>
+
+unsigned int bitCount(unsigned int value) {
+	unsigned int count = 0;
+	while (value > 0) {          
+		if ((value & 1) == 1)     
+			count++;
+		value >>= 1;              
+	}
+	return count;
+}
+
+
+
+int main() {
+	int W;
+	int K;
+	printf("Podaj W i K:\n");
+	scanf_s("%d%d", &W, &K);
+	unsigned int **tab = new unsigned int*[W];
+	for (int i = 0;i < W;i++) {
+		tab[i] = new unsigned int[K];
+	}
+	printf("Podaj wartosci: \n");
+	for (int i = 0;i < W;i++) {
+		for (int j = 0; j < K; j++) {
+			scanf_s("%u", &tab[i][j]);
+		}
+	}
+
+	int maks_index = 0;
+	int maks_suma = 0;
+
+	for (int i = 0;i < W;i++) {
+		int suma = 0;
+		for (int j = 0;j < K;j++) {
+			int a = bitCount(tab[i][j]);
+			suma += a;
+		}
+		if (suma > maks_suma) {
+			maks_suma = suma;
+			maks_index = i;
+		}
+	}
+	for (int j = 0;j < K;j++) {
+		printf("%u ", tab[maks_index][j]);
+	}
+
+	return 0;
+}

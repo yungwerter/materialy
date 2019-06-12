@@ -1,0 +1,13 @@
+Œci¹ga na PN:
+
+tworzenie dynamicznej jednowymiarowej tablicy:
+type *tab = new type[rozmiar]
+
+tworzenie dynamicznej dwuwymiarowej tablicy:
+	type **tab = new type*[w];
+	for (int i = 0;i < w;i++) {
+		tab[i] = new unsigned int[k];
+	}
+
+lista wskaŸników do funkcji:
+typ(*wsk[3])(typy argumentów) = { F0,F1,F2 };
